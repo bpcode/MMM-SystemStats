@@ -69,7 +69,7 @@ Module.register('MMM-SystemStats', {
         //console.log('before compare (' + cpuTemp + '/' + this.config.thresholdCPUTemp + ')');
         if (cpuTemp > this.config.thresholdCPUTemp) {
           console.log('alert for threshold violation (' + cpuTemp + '/' + this.config.thresholdCPUTemp + ')');
-          this.sendNotification("SHOW_ALERT", {type: "notification", timer: 4000, title: "CPU High Temp!!!", message: this.translate("TEMP_THRESHOLD_WARNING") + " Current Temp: " + this.stats.cpuTemp  });
+          this.sendNotification("SHOW_ALERT", {type: "notification", timer: 4000, title: "CPU High Temp!!!", message: this.translate("TEMP_THRESHOLD_WARNING") + "<BR>Current Temp:&nbsp;" + this.stats.cpuTemp  });
         }
       }
       this.stats.sysLoad = Number(payload.sysLoad).toFixed() + '%';
