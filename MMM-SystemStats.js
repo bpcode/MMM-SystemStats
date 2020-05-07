@@ -16,7 +16,7 @@ Module.register('MMM-SystemStats', {
     language: config.language,
     units: config.units,
     useSyslog: false,
-    thresholdCPUTemp: 75, // in configured units
+    thresholdCPUTemp: 70, // in configured units
     baseURLSyslog: 'http://127.0.0.1:8080/syslog',
     label: 'textAndIcon'
   },
@@ -42,6 +42,8 @@ Module.register('MMM-SystemStats', {
   // Define start sequence
   start: function() {
     Log.log('Starting module: ' + this.name);
+    window.addEventListener('online', () => this.updateDom());
+    window.addEventListener('offline', () => this.updateDom());
 
     // set locale
     moment.locale(this.config.language);
@@ -52,6 +54,7 @@ Module.register('MMM-SystemStats', {
     this.stats.freeMem = this.translate('LOADING').toLowerCase();
     this.stats.upTime = this.translate('LOADING').toLowerCase();
     this.stats.freeSpace = this.translate('LOADING').toLowerCase();
+    this.stats.connectionStatus = this.translate('LOADING').toLowerCase();
     this.sendSocketNotification('CONFIG', this.config);
   },
 
@@ -66,48 +69,63 @@ Module.register('MMM-SystemStats', {
         //console.log('before compare (' + cpuTemp + '/' + this.config.thresholdCPUTemp + ')');
         if (cpuTemp > this.config.thresholdCPUTemp) {
           console.log('alert for threshold violation (' + cpuTemp + '/' + this.config.thresholdCPUTemp + ')');
-          this.sendSocketNotification('ALERT', {config: this.config, type: 'WARNING', message: this.translate("TEMP_THRESHOLD_WARNING") + ' (' + this.stats.cpuTemp + '/' + this.config.thresholdCPUTemp + ')' });
+          this.sendNotification("SHOW_ALERT", {type: "notification", timer: 4000, title: "CPU High Temp!!!", message: this.translate("TEMP_THRESHOLD_WARNING") + " Current Temp: " + this.stats.cpuTemp  });
         }
       }
-      this.stats.sysLoad = payload.sysLoad[0];
+      this.stats.sysLoad = Number(payload.sysLoad).toFixed() + '%';
       this.stats.freeMem = Number(payload.freeMem).toFixed() + '%';
       upTime = parseInt(payload.upTime[0]);
       this.stats.upTime = moment.duration(upTime, "seconds").humanize();
       this.stats.freeSpace = payload.freeSpace;
+      this.stats.connectionStatus = window.navigator.onLine ? "Online" : "Offline";
       this.updateDom(this.config.animationSpeed);
     }
   },
 
   // Override dom generator.
   getDom: function() {
+    if (!window.navigator.onLine) {
+      this.sendNotification("SHOW_ALERT", {timer: 5000, imageFA: "exclamation-triangle", title: "Internet Disconnected!!", message: "Your Internet/Wifi is disconnected, please check!!!" });
+    }
+
     var self = this;
     var wrapper = document.createElement('table');
 
     var sysData = {
       cpuTemp: {
         text: 'CPU_TEMP',
-        icon: 'fa-thermometer',
+        icon: 'fa-thermometer-half',
+        color: "yellow",
       },
       sysLoad: {
         text: 'SYS_LOAD',
         icon: 'fa-tachometer',
+        color: "orange",
       },
       freeMem: {
         text: 'RAM_FREE',
-        icon: 'fa-microchip',
+        icon: 'fa-memory',
+        color: "blue",
       },
       upTime: {
         text: 'UPTIME',
-        icon: 'fa-clock-o',
+        icon: 'fa-clock',
+        color: "pink",
       },
       freeSpace: {
         text: 'DISK_FREE',
-        icon: 'fa-hdd-o',
+        icon: 'fa-hdd',
+        color: "green",
       },
+      connectionStatus: {
+        text: 'CONNECITION_STATUS',
+        icon: 'fa-wifi',
+        color: window.navigator.onLine ? "white" : "red",
+      }
     };
-
+    var row = document.createElement('tr');
     Object.keys(sysData).forEach(function (item){
-      var row = document.createElement('tr');
+
 
       if (self.config.label.match(/^(text|textAndIcon)$/)) {
         var c1 = document.createElement('td');
@@ -119,7 +137,7 @@ Module.register('MMM-SystemStats', {
 
       if (self.config.label.match(/^(icon|textAndIcon)$/)) {
         var c2 = document.createElement('td');
-        c2.innerHTML = `<i class="fa ${sysData[item].icon} fa-fw"></i>`;
+        c2.innerHTML = `<i class="fa ${sysData[item].icon} fa-fw" style="color: ${sysData[item].color}"></i>`;
         row.appendChild(c2);
       }
 

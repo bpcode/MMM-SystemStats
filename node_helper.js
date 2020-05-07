@@ -46,15 +46,15 @@ module.exports = NodeHelper.create({
     var temp_conv = '';
     switch (this.config.units) {
     case "imperial":
-        temp_conv = 'awk \'{printf("%.1f°F\\n",(($1*1.8)/1e3)+32)}\'';
+        temp_conv = 'awk \'{printf("%.0f°F\\n",(($1*1.8)/1e3)+32)}\'';
         break;
     case "metric":
-        temp_conv = 'awk \'{printf("%.1f°C\\n",$1/1e3)}\'';
+        temp_conv = 'awk \'{printf("%.0f°C\\n",$1/1e3)}\'';
         break;
     case "default":
     default:
         // kelvin
-        temp_conv = 'awk \'{printf("%.1f°K\\n",($1/1e3)+273.15)}\'';
+        temp_conv = 'awk \'{printf("%.0f°K\\n",($1/1e3)+273.15)}\'';
         break;
     }
 
@@ -62,9 +62,9 @@ module.exports = NodeHelper.create({
       // get cpu temp
       async.apply(exec, temp_conv + ' /sys/class/thermal/thermal_zone0/temp'),
       // get system load
-      async.apply(exec, 'cat /proc/loadavg'),
+      async.apply(exec, 'cat /proc/loadavg | awk \'{print $1*100/4}\''),
       // get free ram in %
-      async.apply(exec, "free | awk '/^Mem:/ {print $4*100/$2}'"),
+      async.apply(exec, "free | awk '/^Mem:/ {print $3*100/$2}'"),
       // get uptime
       async.apply(exec, 'cat /proc/uptime'),
       // get root free-space
@@ -74,7 +74,7 @@ module.exports = NodeHelper.create({
     function (err, res) {
       var stats = {};
       stats.cpuTemp = res[0][0];
-      stats.sysLoad = res[1][0].split(' ');
+      stats.sysLoad = res[1][0];
       stats.freeMem = res[2][0];
       stats.upTime = res[3][0].split(' ');
 	  stats.freeSpace = res[4][0];

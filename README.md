@@ -51,7 +51,7 @@ modules: [
 			align: 'right', // align labels
 			//header: 'System Stats', // This is optional
 			units: 'metric', // default, metric, imperial
-			view: 'textAndIcon',
+			label: 'textAndIcon',
 		},
 	},
 ]
