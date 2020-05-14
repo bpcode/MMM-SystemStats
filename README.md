@@ -5,7 +5,7 @@ This [MagicMirror](https://github.com/MichMich/MagicMirror) modules, which is th
 3. Show CPU utilization in %.
 
 
-![Magic-Mirror Module MMM-SystemStats screenshot](https://github.com/bpcode/MMM-SystemStats/blob/master/Updated%20ScreenShot.png)
+![Magic-Mirror Module MMM-SystemStats screenshot](https://github.com/bpcode/MMM-SystemStats/blob/master/screenshot.png)
 
 Tested with:
 - Raspberry Pi
