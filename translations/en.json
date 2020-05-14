@@ -4,6 +4,6 @@
 	"RAM_FREE": "RAM",
 	"UPTIME": "Uptime",
 	"DISK_FREE": "Avail Space",
-	"CONNECITION_STATUS": "Network"
+	"CONNECITION_STATUS": "Network",
 	"TEMP_THRESHOLD_WARNING": "CPU temp is exceeded threshold!"
 }
