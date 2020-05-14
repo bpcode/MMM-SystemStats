@@ -1,8 +1,9 @@
 {
 	"CPU_TEMP": "CPU Temp",
-	"SYS_LOAD": "System Load",
-	"RAM_FREE": "Free RAM",
+	"SYS_LOAD": "CPU",
+	"RAM_FREE": "RAM",
 	"UPTIME": "Uptime",
 	"DISK_FREE": "Avail Space",
+	"CONNECITION_STATUS": "Network"
 	"TEMP_THRESHOLD_WARNING": "CPU temp is exceeded threshold!"
 }
