@@ -62,7 +62,7 @@ module.exports = NodeHelper.create({
       // get cpu temp
       async.apply(exec, temp_conv + ' /sys/class/thermal/thermal_zone0/temp'),
       // get system load
-      async.apply(exec, 'cat /proc/loadavg | awk \'{print $1*100/4}\''),
+      async.apply(exec, "cat /proc/stat | awk 'NR==1{print 100-($5*100/($2+$3+$4+$5+$6+$7+$8))}'"),
       // get free ram in %
       async.apply(exec, "free | awk '/^Mem:/ {print $3*100/$2}'"),
       // get uptime

@@ -99,7 +99,7 @@ Module.register('MMM-SystemStats', {
       },
       sysLoad: {
         text: 'SYS_LOAD',
-        icon: 'fa-tachometer',
+        icon: 'fa-microchip',
         color: "orange",
       },
       freeMem: {

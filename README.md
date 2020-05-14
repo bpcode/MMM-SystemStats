@@ -2,7 +2,7 @@
 This [MagicMirror](https://github.com/MichMich/MagicMirror) modules, which is the fork from [BenRoe Module](https://github.com/BenRoe/MMM-SystemStats). I have done following modifications:
 1. Shows system stats in a row with colored icons to save space.
 2. Connection status and alert incase of disconnected.
-3. System load show in %.
+3. Show CPU utilization in %.
 
 
 ![Magic-Mirror Module MMM-SystemStats screenshot](https://github.com/bpcode/MMM-SystemStats/blob/master/Updated%20ScreenShot.png)
@@ -134,4 +134,3 @@ The following properties can be configured:
 		</tr>
 	</tbody>
 </table>
-
