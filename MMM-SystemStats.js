@@ -77,7 +77,7 @@ Module.register('MMM-SystemStats', {
       upTime = parseInt(payload.upTime[0]);
       this.stats.upTime = moment.duration(upTime, "seconds").humanize();
       this.stats.freeSpace = payload.freeSpace;
-      this.stats.connectionStatus = window.navigator.onLine ? "Online" : "Offline";
+      this.stats.connectionStatus = window.navigator.onLine ? "ON" : "OFF";
       this.updateDom(this.config.animationSpeed);
     }
   },
@@ -107,16 +107,16 @@ Module.register('MMM-SystemStats', {
         icon: 'fa-memory',
         color: "blue",
       },
-      upTime: {
-        text: 'UPTIME',
-        icon: 'fa-clock',
-        color: "pink",
-      },
-      freeSpace: {
-        text: 'DISK_FREE',
-        icon: 'fa-hdd',
-        color: "green",
-      },
+      // upTime: {
+      //   text: 'UPTIME',
+      //   icon: 'fa-clock',
+      //   color: "pink",
+      // },
+      // freeSpace: {
+      //   text: 'DISK_FREE',
+      //   icon: 'fa-hdd',
+      //   color: "green",
+      // },
       connectionStatus: {
         text: 'CONNECITION_STATUS',
         icon: 'fa-wifi',
