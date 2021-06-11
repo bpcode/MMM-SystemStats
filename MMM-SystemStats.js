@@ -16,7 +16,7 @@ Module.register('MMM-SystemStats', {
     language: config.language,
     units: config.units,
     useSyslog: false,
-    thresholdCPUTemp: 70, // in configured units
+    thresholdCPUTemp: 60, // in configured units
     baseURLSyslog: 'http://127.0.0.1:8080/syslog',
     label: 'textAndIcon'
   },
@@ -107,16 +107,16 @@ Module.register('MMM-SystemStats', {
         icon: 'fa-memory',
         color: "blue",
       },
-      // upTime: {
-      //   text: 'UPTIME',
-      //   icon: 'fa-clock',
-      //   color: "pink",
-      // },
-      // freeSpace: {
-      //   text: 'DISK_FREE',
-      //   icon: 'fa-hdd',
-      //   color: "green",
-      // },
+      upTime: {
+        text: 'UPTIME',
+        icon: 'fa-clock',
+        color: "pink",
+      },
+      freeSpace: {
+        text: 'DISK_FREE',
+        icon: 'fa-hdd',
+        color: "green",
+      },
       connectionStatus: {
         text: 'CONNECITION_STATUS',
         icon: 'fa-wifi',
